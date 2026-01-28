@@ -96,8 +96,16 @@ function initLanguageToggle() {
 /* ============================================
    Typing Effect
    ============================================ */
+let typingTimeout = null; // Global timeout reference
+
 function initTypingEffect(isArabic = false) {
   const typedElement = document.getElementById("typed-text");
+
+  // Clear any existing timeout to prevent multiple instances
+  if (typingTimeout) {
+    clearTimeout(typingTimeout);
+    typingTimeout = null;
+  }
 
   const textsEn = [
     "Full Stack Developer",
@@ -106,7 +114,7 @@ function initTypingEffect(isArabic = false) {
     "Problem Solver",
   ];
 
-  const textsAr = ["مطور Full Stack", "مدرب Python", "فريلانسر", "حلال مشاكل"];
+  const textsAr = ["مطور Full Stack", "مدرس بايثون", "فريلانسر", "حلال مشاكل"];
 
   const texts = isArabic ? textsAr : textsEn;
   let textIndex = 0;
@@ -136,7 +144,7 @@ function initTypingEffect(isArabic = false) {
       typingSpeed = 500; // Pause before next word
     }
 
-    setTimeout(type, typingSpeed);
+    typingTimeout = setTimeout(type, typingSpeed);
   }
 
   // Clear any existing text and start fresh
