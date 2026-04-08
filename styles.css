@@ -2489,6 +2489,116 @@ html[dir="rtl"] .contact-card-info {
   }
 }
 
+/* ============================================
+   Mobile Animation Optimizations
+   ============================================ */
+@media (max-width: 768px) {
+  /* Disable custom cursor on mobile */
+  .custom-cursor,
+  .custom-cursor-follower {
+    display: none !important;
+  }
+
+  /* Disable particles on mobile for performance */
+  .particle {
+    display: none;
+  }
+
+  /* Simplify animations on mobile */
+  .project-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .skill-category:hover {
+    transform: translateY(-5px);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  /* Disable 3D transforms on mobile */
+  .project-card,
+  .skill-category,
+  .stat-card {
+    transform-style: flat !important;
+    perspective: none !important;
+  }
+
+  /* Simplify button animations */
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  .btn-secondary:hover,
+  .btn-outline:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Disable parallax on mobile */
+  .hero-gradient,
+  .hero-image,
+  .floating-card {
+    transform: none !important;
+  }
+
+  /* Simplify social link animations */
+  .social-link:hover {
+    transform: translateY(-5px);
+  }
+
+  /* Reduce animation complexity */
+  * {
+    animation-duration: 0.3s !important;
+  }
+
+  /* Disable gradient shifting on mobile for performance */
+  .name-text,
+  .section-title,
+  .btn-primary,
+  .hero-gradient,
+  .category-icon,
+  .card-icon {
+    animation: none !important;
+  }
+
+  /* Keep only essential fade animations */
+  .animate-fade-up,
+  .animate-fade-left,
+  .animate-bounce-in,
+  .animate-slide-right,
+  .animate-slide-left {
+    animation-duration: 0.4s !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on touch devices */
+  .project-card:hover,
+  .skill-category:hover,
+  .stat-card:hover,
+  .contact-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Simplify button interactions */
+  .btn:hover {
+    transform: none;
+  }
+
+  /* Active states for touch */
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .project-card:active,
+  .skill-item:active {
+    transform: scale(0.98);
+  }
+}
+
 @media (max-width: 480px) {
   .image-wrapper {
     width: 250px;
@@ -2526,5 +2636,22 @@ html[dir="rtl"] .contact-card-info {
 
   .timeline-content {
     padding: 20px;
+  }
+
+  /* Further reduce animations on small screens */
+  .page-loader {
+    animation-duration: 0.3s !important;
+  }
+
+  .loader-logo,
+  .loader-spinner {
+    animation-duration: 0.5s !important;
+  }
+
+  /* Disable stagger delays on small screens */
+  .skills-list .skill-item,
+  .timeline-item,
+  .project-card {
+    animation-delay: 0s !important;
   }
 }

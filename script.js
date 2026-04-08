@@ -2,6 +2,16 @@
    Ahmed Mahmoud Portfolio - JavaScript
    ============================================ */
 
+// Mobile detection
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+    || window.innerWidth <= 768;
+};
+
+const isTouchDevice = () => {
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize page loader
   initPageLoader();
@@ -14,12 +24,16 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollAnimations();
   initSmoothScroll();
   initCounterAnimation();
-  initParticles();
-  initMagneticButtons();
-  initTiltEffect();
-  initParallax();
   initTextReveal();
-  initCustomCursor();
+  
+  // Only initialize heavy animations on desktop
+  if (!isMobile() && !isTouchDevice()) {
+    initParticles();
+    initMagneticButtons();
+    initTiltEffect();
+    initParallax();
+    initCustomCursor();
+  }
 });
 
 /* ============================================
@@ -333,6 +347,9 @@ initActiveNavLink();
    Particle System
    ============================================ */
 function initParticles() {
+  // Skip on mobile for performance
+  if (isMobile() || isTouchDevice()) return;
+  
   const particlesContainer = document.getElementById("particles");
   if (!particlesContainer) return;
 
@@ -363,6 +380,9 @@ function initParticles() {
    Magnetic Buttons Effect
    ============================================ */
 function initMagneticButtons() {
+  // Skip on mobile/touch devices
+  if (isMobile() || isTouchDevice()) return;
+  
   const buttons = document.querySelectorAll(".btn, .social-link, .contact-card");
   
   buttons.forEach((button) => {
@@ -384,6 +404,9 @@ function initMagneticButtons() {
    3D Tilt Effect for Cards
    ============================================ */
 function initTiltEffect() {
+  // Skip on mobile/touch devices
+  if (isMobile() || isTouchDevice()) return;
+  
   const cards = document.querySelectorAll(".project-card, .skill-category, .stat-card");
   
   cards.forEach((card) => {
@@ -411,6 +434,9 @@ function initTiltEffect() {
    Parallax Scrolling Effect
    ============================================ */
 function initParallax() {
+  // Skip on mobile for performance
+  if (isMobile() || isTouchDevice()) return;
+  
   const parallaxElements = document.querySelectorAll(".hero-gradient, .hero-image, .floating-card");
   
   window.addEventListener("scroll", () => {
@@ -447,6 +473,9 @@ function initTextReveal() {
    Custom Cursor Effect
    ============================================ */
 function initCustomCursor() {
+  // Skip on mobile/touch devices
+  if (isMobile() || isTouchDevice()) return;
+  
   // Create cursor elements
   const cursor = document.createElement("div");
   const cursorFollower = document.createElement("div");
