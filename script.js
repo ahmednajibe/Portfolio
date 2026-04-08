@@ -3,6 +3,9 @@
    ============================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize page loader
+  initPageLoader();
+  
   // Initialize all components
   initNavbar();
   initMobileMenu();
@@ -11,7 +14,31 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollAnimations();
   initSmoothScroll();
   initCounterAnimation();
+  initParticles();
+  initMagneticButtons();
+  initTiltEffect();
+  initParallax();
+  initTextReveal();
+  initCustomCursor();
 });
+
+/* ============================================
+   Page Loader
+   ============================================ */
+function initPageLoader() {
+  const loader = document.getElementById("pageLoader");
+  
+  // Hide loader after page is fully loaded
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      loader.classList.add("hidden");
+      // Remove from DOM after animation
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 500);
+    }, 800); // Show loader for at least 800ms
+  });
+}
 
 /* ============================================
    Navbar Scroll Effect
@@ -301,3 +328,177 @@ function initActiveNavLink() {
 
 // Initialize active nav link functionality
 initActiveNavLink();
+
+/* ============================================
+   Particle System
+   ============================================ */
+function initParticles() {
+  const particlesContainer = document.getElementById("particles");
+  if (!particlesContainer) return;
+
+  const particleCount = 50;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement("div");
+    particle.className = "particle";
+    
+    // Random position
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.top = Math.random() * 100 + "%";
+    
+    // Random size
+    const size = Math.random() * 4 + 2;
+    particle.style.width = size + "px";
+    particle.style.height = size + "px";
+    
+    // Random animation delay
+    particle.style.animationDelay = Math.random() * 20 + "s";
+    particle.style.animationDuration = (Math.random() * 10 + 10) + "s";
+    
+    particlesContainer.appendChild(particle);
+  }
+}
+
+/* ============================================
+   Magnetic Buttons Effect
+   ============================================ */
+function initMagneticButtons() {
+  const buttons = document.querySelectorAll(".btn, .social-link, .contact-card");
+  
+  buttons.forEach((button) => {
+    button.addEventListener("mousemove", (e) => {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      button.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    });
+    
+    button.addEventListener("mouseleave", () => {
+      button.style.transform = "";
+    });
+  });
+}
+
+/* ============================================
+   3D Tilt Effect for Cards
+   ============================================ */
+function initTiltEffect() {
+  const cards = document.querySelectorAll(".project-card, .skill-category, .stat-card");
+  
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+    });
+    
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
+/* ============================================
+   Parallax Scrolling Effect
+   ============================================ */
+function initParallax() {
+  const parallaxElements = document.querySelectorAll(".hero-gradient, .hero-image, .floating-card");
+  
+  window.addEventListener("scroll", () => {
+    const scrolled = window.pageYOffset;
+    
+    parallaxElements.forEach((element, index) => {
+      const speed = (index + 1) * 0.1;
+      element.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+  });
+}
+
+/* ============================================
+   Text Reveal Animation
+   ============================================ */
+function initTextReveal() {
+  const textElements = document.querySelectorAll(".hero-title, .section-title");
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = "textReveal 1s ease forwards";
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  textElements.forEach((element) => {
+    observer.observe(element);
+  });
+}
+
+/* ============================================
+   Custom Cursor Effect
+   ============================================ */
+function initCustomCursor() {
+  // Create cursor elements
+  const cursor = document.createElement("div");
+  const cursorFollower = document.createElement("div");
+  
+  cursor.className = "custom-cursor";
+  cursorFollower.className = "custom-cursor-follower";
+  
+  document.body.appendChild(cursor);
+  document.body.appendChild(cursorFollower);
+  
+  let mouseX = 0;
+  let mouseY = 0;
+  let followerX = 0;
+  let followerY = 0;
+  
+  // Update cursor position
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    cursor.style.left = mouseX + "px";
+    cursor.style.top = mouseY + "px";
+  });
+  
+  // Smooth follower animation
+  function animateFollower() {
+    const distX = mouseX - followerX;
+    const distY = mouseY - followerY;
+    
+    followerX += distX * 0.1;
+    followerY += distY * 0.1;
+    
+    cursorFollower.style.left = followerX + "px";
+    cursorFollower.style.top = followerY + "px";
+    
+    requestAnimationFrame(animateFollower);
+  }
+  
+  animateFollower();
+  
+  // Expand cursor on hover
+  const hoverElements = document.querySelectorAll("a, button, .project-card, .skill-item");
+  
+  hoverElements.forEach((element) => {
+    element.addEventListener("mouseenter", () => {
+      cursor.classList.add("cursor-hover");
+      cursorFollower.classList.add("cursor-hover");
+    });
+    
+    element.addEventListener("mouseleave", () => {
+      cursor.classList.remove("cursor-hover");
+      cursorFollower.classList.remove("cursor-hover");
+    });
+  });
+}
