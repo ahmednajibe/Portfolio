@@ -775,12 +775,12 @@ button {
 }
 
 /* ============================================
-   Page Loading Animation
+   Page Loading Animation - Cartoon Style
    ============================================ */
 .page-loader {
   position: fixed;
   inset: 0;
-  background: var(--bg-primary);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -795,28 +795,242 @@ button {
 
 .loader-content {
   text-align: center;
+  position: relative;
 }
 
-.loader-logo {
-  font-size: 4rem;
+/* Cartoon Character */
+.cartoon-character {
+  position: relative;
+  animation: characterBounce 1s ease-in-out infinite;
+}
+
+@keyframes characterBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+/* Character Head */
+.character-head {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 50%;
+  position: relative;
+  margin: 0 auto 10px;
+  box-shadow: 
+    0 10px 30px rgba(99, 102, 241, 0.4),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.2);
+  animation: headWiggle 2s ease-in-out infinite;
+}
+
+@keyframes headWiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Character Face */
+.character-face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+/* Eyes */
+.eye {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 35px;
+  animation: eyeBlink 3s ease-in-out infinite;
+}
+
+.eye::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: eyeMove 2s ease-in-out infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes eyeMove {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-30%, -50%);
+  }
+}
+
+.eye-left {
+  left: 30px;
+}
+
+.eye-right {
+  right: 30px;
+}
+
+/* Mouth */
+.mouth {
+  width: 40px;
+  height: 20px;
+  border: 3px solid white;
+  border-top: none;
+  border-radius: 0 0 40px 40px;
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: mouthSmile 2s ease-in-out infinite;
+}
+
+@keyframes mouthSmile {
+  0%, 100% {
+    width: 40px;
+    height: 20px;
+  }
+  50% {
+    width: 50px;
+    height: 25px;
+  }
+}
+
+/* Character Logo */
+.character-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
   font-weight: 800;
-  background: var(--gradient-primary);
-  background-size: 200% 200%;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  animation: logoGlow 2s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+  0%, 100% {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    text-shadow: 
+      0 2px 10px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Character Body */
+.character-body {
+  width: 80px;
+  height: 60px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 40px 40px 50% 50%;
+  margin: 0 auto;
+  box-shadow: 
+    0 5px 20px rgba(99, 102, 241, 0.3),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+  animation: bodySquish 1s ease-in-out infinite;
+}
+
+@keyframes bodySquish {
+  0%, 100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: scaleY(0.9) scaleX(1.1);
+  }
+}
+
+/* Loading Dots */
+.loading-dots {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 50%;
+  animation: dotBounce 1.4s ease-in-out infinite;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotBounce {
+  0%, 80%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Loading Text */
+.loading-text {
+  margin-top: 20px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 2s ease infinite, scalePulse 1.5s ease infinite;
-  margin-bottom: 20px;
+  animation: textShimmer 2s linear infinite;
 }
 
-.loader-spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid var(--border-color);
-  border-top-color: var(--accent-primary);
-  border-radius: 50%;
-  animation: rotate3D 1s linear infinite;
-  margin: 0 auto;
+@keyframes textShimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 /* ============================================
@@ -2643,9 +2857,26 @@ html[dir="rtl"] .contact-card-info {
     animation-duration: 0.3s !important;
   }
 
-  .loader-logo,
-  .loader-spinner {
+  .cartoon-character,
+  .character-head,
+  .loading-dots,
+  .loading-text {
     animation-duration: 0.5s !important;
+  }
+  
+  /* Simplify cartoon on mobile */
+  .character-head {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .character-logo {
+    font-size: 1.8rem;
+  }
+  
+  .character-body {
+    width: 60px;
+    height: 45px;
   }
 
   /* Disable stagger delays on small screens */
